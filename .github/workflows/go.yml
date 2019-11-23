@@ -1,5 +1,7 @@
-name: Go
-on: [push]
+name: Go Testing and Build
+on:
+  - push
+  - pull_request
 jobs:
 
   build:

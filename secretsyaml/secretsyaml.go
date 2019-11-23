@@ -13,6 +13,7 @@ import (
 type Secret struct {
 	APIVersion string            `yaml:"apiVersion"`
 	Kind       string            `yaml:"kind"`
+	Type       string            `yaml:"type"`
 	Metadata   map[string]string `yaml:"metadata"`
 	Data       map[string]string `yaml:"data"`
 }

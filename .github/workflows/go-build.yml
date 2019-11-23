@@ -1,6 +1,6 @@
-name: Go Testing and Build
+name: Go Build
 on:
-  - push
+  - release
 jobs:
 
   build:

@@ -5,10 +5,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/jasonmccallister/kubectl-secret-encode/secretsyaml"
+	"github.com/jasonmccallister/secretsyaml/secretsyaml"
 )
 
-// YAML is the representation of a secrets yaml
+// YAML is the representation of a secrets YAML
 type YAML struct {
 	APIVersion string            `yaml:"apiVersion"`
 	Kind       string            `yaml:"kind"`

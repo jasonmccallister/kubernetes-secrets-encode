@@ -19,6 +19,7 @@ func TestEncode(t *testing.T) {
 			output: "./testdata/encoded.yaml",
 			err:    "",
 		},
+		// TODO add bad yaml files
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {

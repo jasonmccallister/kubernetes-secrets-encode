@@ -1,14 +1,11 @@
 package main
 
 import (
-	"encoding/base64"
-	"errors"
 	"flag"
-	"io/ioutil"
 	"log"
 	"os"
 
-	"gopkg.in/yaml.v2"
+	"github.com/jasonmccallister/kubectl-secret-encode/secretsyaml"
 )
 
 // YAML is the representation of a secrets yaml
@@ -26,39 +23,10 @@ func main() {
 	}
 
 	fileArg := args[1]
-	file, err := ioutil.ReadFile(fileArg)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	output := flag.String("output", "encoded.yaml", "the output file to save encoded YAML file")
+	outputArg := flag.String("output", "encoded.yaml", "the output file to save encoded YAML file")
 	flag.Parse()
 
-	secrets := YAML{}
-
-	yaml.Unmarshal(file, &secrets)
-
-	if secrets.Kind != "Secret" {
-		log.Fatal(errors.New("you must provide a secrets yaml"))
-	}
-
-	err = yaml.Unmarshal(file, &secrets)
-	if err != nil {
-		log.Fatalf("error: %v", err)
-	}
-
-	for k, v := range secrets.Data {
-		secrets.Data[k] = base64.StdEncoding.EncodeToString([]byte(v))
-	}
-
-	// write to output file
-	encoded, err := yaml.Marshal(&secrets)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// write to file
-	err = ioutil.WriteFile(*output, []byte(encoded), 0644)
+	err := secretsyaml.Encode(fileArg, *outputArg)
 	if err != nil {
 		log.Fatal(err)
 	}

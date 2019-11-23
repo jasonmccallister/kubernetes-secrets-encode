@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/base64"
 	"errors"
+	"flag"
 	"io/ioutil"
 	"log"
 	"os"
@@ -10,10 +11,11 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type secretsYAML struct {
+// YAML is the representation of a secrets yaml
+type YAML struct {
 	APIVersion string            `yaml:"apiVersion"`
 	Kind       string            `yaml:"kind"`
-	Meta       map[string]string `yaml:"meta"`
+	Metadata   map[string]string `yaml:"metadata"`
 	Data       map[string]string `yaml:"data"`
 }
 
@@ -29,7 +31,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	secrets := secretsYAML{}
+	output := flag.String("output", "encoded.yaml", "the output file to save encoded YAML file")
+	flag.Parse()
+
+	secrets := YAML{}
 
 	yaml.Unmarshal(file, &secrets)
 
@@ -53,8 +58,7 @@ func main() {
 	}
 
 	// write to file
-	// TODO convert to dynamic named file
-	err = ioutil.WriteFile("./testdata/example.secrets.encoded.yaml", []byte(encoded), 0644)
+	err = ioutil.WriteFile(*output, []byte(encoded), 0644)
 	if err != nil {
 		log.Fatal(err)
 	}

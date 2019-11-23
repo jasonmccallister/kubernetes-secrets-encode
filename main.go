@@ -51,4 +51,15 @@ func main() {
 	}
 
 	// write to output file
+	encoded, err := yaml.Marshal(&secrets)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// write to file
+	// TODO convert to dynamic named file
+	err = ioutil.WriteFile("./testdata/example.secrets.encoded.yaml", []byte(encoded), 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

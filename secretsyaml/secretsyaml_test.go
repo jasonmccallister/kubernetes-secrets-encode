@@ -19,7 +19,12 @@ func TestEncode(t *testing.T) {
 			output: "./testdata/encoded.yaml",
 			err:    "",
 		},
-		// TODO add bad yaml files
+		{
+			desc:   "YAML that is not a Secret returns an error",
+			input:  "./testdata/not.a.secrets.yaml",
+			output: "./testdata/not-a-secret-encoded.yaml",
+			err:    "you must provide a YAML with the kind Secret",
+		},
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
@@ -32,22 +37,22 @@ func TestEncode(t *testing.T) {
 			// Act
 			err = Encode(tC.input, tC.output)
 
-			outputFile, err := ioutil.ReadFile(tC.output)
-			if err != nil {
-				t.Fatal(err)
-			}
-
 			// Assert
-			if strings.Compare(string(inputFile), string(outputFile)) == 0 {
-				t.Errorf(
-					"expected the input and output files to not match, expected: \n%v\n actual: \n%v\n",
-					string(inputFile),
-					string(outputFile),
-				)
-			}
 			if tC.err != "" {
 				if err.Error() != tC.err {
 					t.Errorf("expected error to be %v, got %v instead", tC.err, err)
+				}
+			} else {
+				outputFile, err := ioutil.ReadFile(tC.output)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if strings.Compare(string(inputFile), string(outputFile)) == 0 {
+					t.Errorf(
+						"expected the input and output files to not match, expected: \n%v\n actual: \n%v\n",
+						string(inputFile),
+						string(outputFile),
+					)
 				}
 			}
 		})

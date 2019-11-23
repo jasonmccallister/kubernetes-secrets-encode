@@ -8,9 +8,9 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// YAML is the representation of a secrets.yaml file in Go
+// Secret is the representation of a secrets.yaml file in Go
 // used for easy marshalling and unmarshalling
-type YAML struct {
+type Secret struct {
 	APIVersion string            `yaml:"apiVersion"`
 	Kind       string            `yaml:"kind"`
 	Metadata   map[string]string `yaml:"metadata"`
@@ -30,7 +30,7 @@ func Encode(filename, output string) error {
 	}
 
 	// unmarshal file
-	secret := YAML{}
+	secret := Secret{}
 	err = yaml.Unmarshal(file, &secret)
 	if err != nil {
 		return err

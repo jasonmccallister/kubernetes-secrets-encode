@@ -19,14 +19,16 @@ type YAML struct {
 func main() {
 	args := os.Args
 	if len(args) == 1 {
-		log.Fatal("missing")
+		log.Fatal("missing file arg")
 	}
+	input := args[1]
 
-	fileArg := args[1]
-	outputArg := flag.String("output", "encoded.yaml", "the output file to save encoded YAML file")
+	var output string
+	flag.StringVar(&output, "output", "encoded.yaml", "the output file to save encoded YAML file")
+
 	flag.Parse()
 
-	err := secretsyaml.Encode(fileArg, *outputArg)
+	err := secretsyaml.Encode(input, output)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,4 +1,4 @@
-module github.com/jasonmccallister/kubectl-secret-encode
+module github.com/jasonmccallister/secretsyaml
 
 go 1.13
 

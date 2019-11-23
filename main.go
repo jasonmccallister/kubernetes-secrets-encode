@@ -13,6 +13,7 @@ import (
 type secretsYAML struct {
 	APIVersion string            `yaml:"apiVersion"`
 	Kind       string            `yaml:"kind"`
+	Meta       map[string]string `yaml:"meta"`
 	Data       map[string]string `yaml:"data"`
 }
 
@@ -43,11 +44,6 @@ func main() {
 
 	for k, v := range secrets.Data {
 		secrets.Data[k] = base64.StdEncoding.EncodeToString([]byte(v))
-	}
-
-	log.Println("showing encoded values")
-	for _, v := range secrets.Data {
-		log.Println(v)
 	}
 
 	// write to output file

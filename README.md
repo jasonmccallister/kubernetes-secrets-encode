@@ -13,7 +13,7 @@ TODO
 ./secretsyaml project-secrets.yaml
 ```
 
-If passed the followin file:
+If passed the following file as the first argument:
 
 ```yaml
 apiVersion: v1

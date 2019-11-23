@@ -10,5 +10,45 @@ TODO
 ## Usage
 
 ```bash
-./secretsyaml project-secrets.yaml -o project-secrets-encoded.yaml
+./secretsyaml project-secrets.yaml
+```
+
+If passed the followin file:
+
+```yaml
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: some-example-secrets
+data:
+  SECURITY_KEY: thisissupersecret
+  DB_DRIVER: dontstoreinplaintext
+  DB_SERVER: thisisok
+  DB_USER: thisisalsook
+  DB_PASSWORD: neverstoreinplaintextorencodedbybase64
+  DB_DATABASE: thisisokaswell
+  DB_SCHEMA: totallyfineaswell
+  DB_TABLE_PREFIX: yesthisto
+  DB_PORT: thisispublicbutmaybedontstore
+```
+
+This will output a the YAML with secrets encoded as `encoded.yaml` with the following contents:
+
+```yaml
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: some-example-secrets
+data:
+  DB_DATABASE: dGhpc2lzb2thc3dlbGw=
+  DB_DRIVER: ZG9udHN0b3JlaW5wbGFpbnRleHQ=
+  DB_PASSWORD: bmV2ZXJzdG9yZWlucGxhaW50ZXh0b3JlbmNvZGVkYnliYXNlNjQ=
+  DB_PORT: dGhpc2lzcHVibGljYnV0bWF5YmVkb250c3RvcmU=
+  DB_SCHEMA: dG90YWxseWZpbmVhc3dlbGw=
+  DB_SERVER: dGhpc2lzb2s=
+  DB_TABLE_PREFIX: eWVzdGhpc3Rv
+  DB_USER: dGhpc2lzYWxzb29r
+  SECURITY_KEY: dGhpc2lzc3VwZXJzZWNyZXQ=
 ```
